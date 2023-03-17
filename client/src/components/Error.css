@@ -1,0 +1,12 @@
+.error-msg {
+	margin-top: 0.8rem;
+	color: red;
+	font-size: 1.4rem;
+	font-family: "Kumbh-Sans";
+}
+
+@media screen and (min-width: 60rem) {
+	.error-msg {
+		font-size: 1.6rem;
+	}
+}
