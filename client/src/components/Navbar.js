@@ -23,6 +23,7 @@ export default function Navbar() {
 				<li>
 					{auth.isAuthenticated && (
 						<div
+							className="log-out-button"
 							onClick={() => {
 								auth.signout();
 								navigate("/");

@@ -12,6 +12,12 @@ html,
 body,
 #root {
 	height: 100%;
+	font-family: "josefin-sans";
+}
+
+@font-face {
+	font-family: "josefin-sans";
+	src: url("./fonts/JosefinSans-VariableFont_wght.ttf");
 }
 
 :root {
