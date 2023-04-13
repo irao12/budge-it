@@ -8,8 +8,9 @@ module.exports = (sequelize, DataTypes) => {
 				type: DataTypes.STRING,
 				allowNull: false,
 			},
-			accessIds: {
-				type: DataTypes.ARRAY(DataTypes.INTEGER),
+			name: {
+				type: DataTypes.STRING,
+				allowNull: false,
 			},
 		},
 		{

@@ -11,12 +11,19 @@ module.exports = (sequelize, DataTypes) => {
 			},
 			category: {
 				type: DataTypes.STRING,
+				defaultValue: "Miscellaneous",
 			},
 			amount: {
 				type: DataTypes.INTEGER,
 				allowNull: false,
 				defaultValue: 0,
 			},
+			date: {
+				type: DataTypes.DATEONLY,
+				defaultValue: DataTypes.NOW,
+			},
+			createdAt: false,
+			updatedAt: false,
 		},
 		{
 			sequelize,
