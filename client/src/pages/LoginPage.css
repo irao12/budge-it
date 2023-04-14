@@ -92,7 +92,8 @@
 	text-decoration: none;
 }
 
-.login-section a:link {
+.login-section a:link,
+.login-section a:visited {
 	color: black;
 }
 

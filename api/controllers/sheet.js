@@ -1,20 +1,19 @@
 const router = require("express").Router();
 const { sheet: Sheet } = require("../models");
 
-// url: /api/sheet/:id
-router.get("/:id", (req, res) => {
-	const { id } = req.params;
-	Sheet.findOne({
+// url: /api/sheet/:ownerId
+router.get("/:ownerId", (req, res) => {
+	const { ownerId } = req.params;
+	if (ownerId !== req.user.id) {
+		res.status(401).json({ error: "User does not have access" });
+	}
+	Sheet.findAll({
 		where: {
-			id: id,
+			ownerId: ownerId,
 		},
 	})
-		.then((sheet) => {
-			if (sheet.ownerId == req.user.id) {
-				res.status(200).json({ sheet: sheet });
-			} else {
-				res.status(401).json({ error: "User does not have access" });
-			}
+		.then((sheets) => {
+			res.status(200).json({ sheets: sheets });
 		})
 		.catch((err) => {
 			console.log(err);
@@ -22,6 +21,7 @@ router.get("/:id", (req, res) => {
 		});
 });
 
+// url: /api/sheet/
 router.post("/", (req, res) => {
 	if (req.user.id) {
 		let { sheetName } = req.body;
@@ -35,3 +35,5 @@ router.post("/", (req, res) => {
 			});
 	}
 });
+
+module.exports = router;

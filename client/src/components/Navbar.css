@@ -21,7 +21,7 @@ nav .logo {
 	display: flex;
 	align-items: center;
 	font-size: 3.2rem;
-	font-family: josefin-sans;
+	font-family: "josefin-sans";
 }
 
 .nav-links a {
