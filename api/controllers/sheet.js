@@ -36,4 +36,23 @@ router.post("/", (req, res) => {
 	}
 });
 
+// url: /api/sheet/:id
+router.delete("/:id", (req, res) => {
+	const { id } = req.params;
+	Sheet.findOne({ where: { id: id } })
+		.then((sheet) => {
+			if (sheet.ownerId === req.user.id) {
+				sheet.destroy();
+				res.sendStatus(201);
+			} else {
+				res.status(400).json({
+					err: "User does not have access to the sheet",
+				});
+			}
+		})
+		.catch((err) => {
+			res.json(err).status(400);
+		});
+});
+
 module.exports = router;
