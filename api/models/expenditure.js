@@ -5,7 +5,7 @@ module.exports = (sequelize, DataTypes) => {
 
 	Expenditure.init(
 		{
-			sheetId: {
+			budgetId: {
 				type: DataTypes.INTEGER,
 				allowNull: false,
 			},

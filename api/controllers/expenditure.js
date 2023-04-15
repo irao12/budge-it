@@ -1,7 +1,8 @@
 const router = require("express").Router();
-const { expenditure: Expenditure, sheet: Sheet } = require("../models");
+const { expenditure: Expenditure, budget: Budget } = require("../models");
 const { Sequelize, Op } = require("sequelize");
 const expenditure = require("../models/expenditure");
+const budget = require("../models/budget");
 
 // url: /api/expenditure/:id
 router.get("/:id", (req, res) => {
@@ -12,14 +13,14 @@ router.get("/:id", (req, res) => {
 		where: { id: id },
 	})
 		.then((expenditure) => {
-			const sheetId = expenditure.sheetId;
-			//find the sheet that the expenditure belongs to
-			Sheet.findOne({
-				where: { id: sheetId },
-			}).then((sheet) => {
+			const budgetId = expenditure.budgetId;
+			//find the budget that the expenditure belongs to
+			Budget.findOne({
+				where: { id: budgetId },
+			}).then((budget) => {
 				// if the user is the owner, return the expenditure
 				// else return an error
-				if (sheet.ownerId === req.user.id) {
+				if (budget.ownerId === req.user.id) {
 					res.status(200).json(expenditure);
 				} else {
 					res.status(400).json({
@@ -34,20 +35,20 @@ router.get("/:id", (req, res) => {
 		});
 });
 
-// url: /api/expenditure/:sheetid
-router.get(":sheetId/", (req, res) => {
-	const { sheetId } = req.params;
+// url: /api/expenditure/:budgetId
+router.get(":budgetId/", (req, res) => {
+	const { budgetId } = req.params;
 
-	Sheet.findOne({
+	Budget.findOne({
 		where: {
-			id: sheetId,
+			id: budgetId,
 		},
 	})
-		.then((sheet) => {
-			if (sheet.ownerId === req.user.id) {
+		.then((budget) => {
+			if (budget.ownerId === req.user.id) {
 				Expenditure.findAll({
 					where: {
-						sheetId: sheetId,
+						budgetId: budgetId,
 					},
 					order: [["date", "ASC"]],
 				}).then((expenditures) => {
@@ -65,19 +66,19 @@ router.get(":sheetId/", (req, res) => {
 		});
 });
 
-// url: /api/expenditure/:sheetid/:category
-router.get(":sheetId/:category", (req, res) => {
-	const { sheetId, category } = req.params;
-	Sheet.findOne({
+// url: /api/expenditure/:budgetid/:category
+router.get(":budgetId/:category", (req, res) => {
+	const { budgetId, category } = req.params;
+	Budget.findOne({
 		where: {
-			id: sheetId,
+			id: budgetId,
 		},
 	})
-		.then((sheet) => {
-			if (sheet.ownerId === req.user.id) {
+		.then((budget) => {
+			if (budget.ownerId === req.user.id) {
 				Expenditure.findAll({
 					where: {
-						sheetId: sheetId,
+						budgetId: budgetId,
 						category: category,
 					},
 					order: [["date", "ASC"]],
@@ -96,16 +97,16 @@ router.get(":sheetId/:category", (req, res) => {
 		});
 });
 
-// url: /api/expenditure/:sheetid/:month
-router.get(":sheetId/:year/:month", (req, res) => {
-	const { sheetId, month, year } = req.params;
-	Sheet.findOne({
+// url: /api/expenditure/:budgetId/:month
+router.get(":budgetId/:year/:month", (req, res) => {
+	const { budgetId, month, year } = req.params;
+	Budget.findOne({
 		where: {
-			id: sheetId,
+			id: budgetId,
 		},
 	})
-		.then((sheet) => {
-			if (sheet.ownerId === req.user.id) {
+		.then((budget) => {
+			if (budget.ownerId === req.user.id) {
 				Expenditure.findAll({
 					where: {
 						[Op.and]: [
@@ -135,16 +136,16 @@ router.get(":sheetId/:year/:month", (req, res) => {
 		});
 });
 
-// url: /api/expenditure/:sheetid/:year
-router.get(":sheetId/:year", (req, res) => {
-	const { sheetId, year } = req.params;
-	Sheet.findOne({
+// url: /api/expenditure/:budgetId/:year
+router.get(":budgetId/:year", (req, res) => {
+	const { budgetId, year } = req.params;
+	Budget.findOne({
 		where: {
-			id: sheetId,
+			id: budgetId,
 		},
 	})
-		.then((sheet) => {
-			if (sheet.ownerId === req.user.id) {
+		.then((budget) => {
+			if (budget.ownerId === req.user.id) {
 				Expenditure.findAll({
 					where: Sequelize.where(
 						Sequelize.fn("YEAR", Sequelize.col("date")),
@@ -166,9 +167,9 @@ router.get(":sheetId/:year", (req, res) => {
 		});
 });
 
-// url: /api/expenditure/:sheetid/
-router.post(":sheetId/", (req, res) => {
-	const { sheetId } = req.params;
+// url: /api/expenditure/:budgetId/
+router.post(":budgetId/", (req, res) => {
+	const { budgetId } = req.params;
 	const data = { amount: req.body.amount };
 
 	if (req.body.category) {
@@ -178,8 +179,8 @@ router.post(":sheetId/", (req, res) => {
 		data.date = req.body.date;
 	}
 
-	Sheet.findOne({ where: { sheetId: sheetId } }).then((sheet) => {
-		if ((sheet.ownerId = req.user.id)) {
+	Budget.findOne({ where: { budgetId: budgetId } }).then((budget) => {
+		if ((budget.ownerId = req.user.id)) {
 			Expenditure.create(data).then((newExpenditure) => {
 				res.status(200);
 			});
@@ -200,14 +201,14 @@ router.delete("/:id", (req, res) => {
 		where: { id: id },
 	})
 		.then((expenditure) => {
-			const sheetId = expenditure.sheetId;
-			//find the sheet that the expenditure belongs to
-			Sheet.findOne({
-				where: { id: sheetId },
-			}).then((sheet) => {
+			const budgetId = expenditure.budgetId;
+			//find the budget that the expenditure belongs to
+			Budget.findOne({
+				where: { id: budgetId },
+			}).then((budget) => {
 				// if the user is the owner, return the expenditure
 				// else return an error
-				if (sheet.ownerId === req.user.id) {
+				if (budget.ownerId === req.user.id) {
 					expenditure.destroy();
 					res.sendStatus(204);
 				} else {
