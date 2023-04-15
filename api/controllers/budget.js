@@ -24,9 +24,13 @@ router.get("/:ownerId", (req, res) => {
 // url: /api/budget/
 router.post("/", (req, res) => {
 	if (req.user.id) {
-		let { budgetName } = req.body;
+		let { budgetName, budgetDesc } = req.body;
 		console.log(budgetName);
-		Budget.create({ ownerId: req.user.id, budgetName: budgetName })
+		Budget.create({
+			ownerId: req.user.id,
+			name: budgetName,
+			description: budgetDesc,
+		})
 			.then((newBudget) => {
 				res.status(201).json(newBudget);
 			})
