@@ -15,7 +15,7 @@ export default function Navbar() {
 				</li>
 				<li>
 					{auth.isAuthenticated ? (
-						<Link to="account">Account</Link>
+						<Link to="budgets">Budgets</Link>
 					) : (
 						<Link to="login">Log In</Link>
 					)}
