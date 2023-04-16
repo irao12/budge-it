@@ -1,23 +1,26 @@
 nav {
 	height: var(--navbar-height);
+	position: sticky;
+	top: 0;
 	background-color: var(--green);
 	color: white;
 	box-shadow: 2px 5px 8px rgba(130, 129, 129, 0.313);
 	display: flex;
+	align-items: center;
 	justify-content: space-between;
 	padding: 0 2rem;
 }
 
-.nav-links {
+nav .nav-links {
 	height: 100%;
 	display: flex;
 	align-items: center;
 	list-style-type: none;
-	gap: 2rem;
+	gap: 3rem;
 }
 
 nav .logo {
-	height: 100%;
+	height: var(--navbar-height);
 	display: flex;
 	align-items: center;
 	font-size: 3.2rem;
@@ -29,7 +32,7 @@ nav .logo {
 	text-decoration: none;
 }
 
-.nav-links a:link {
+nav .nav-links a:link {
 	color: white;
 }
 
@@ -38,6 +41,65 @@ nav .logo {
 	cursor: pointer;
 }
 
-.nav-links a:visited {
+nav .nav-links a:visited {
 	color: white;
+}
+
+.menu-button {
+	display: none;
+}
+
+#root > .nav-links {
+	display: none;
+}
+
+#root > .nav-links * {
+	color: black;
+	font-size: 2rem;
+}
+
+@media screen and (max-width: 600px) {
+	nav .nav-links {
+		display: none;
+		float: left;
+	}
+	.menu-button {
+		display: block;
+		height: 4rem;
+		width: 4rem;
+		border: none;
+		background-color: transparent;
+		cursor: pointer;
+	}
+	#root > .nav-links {
+		padding: 4rem;
+		display: flex;
+		width: 100%;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		gap: 4rem;
+		background-color: var(--light-green);
+	}
+}
+
+@media screen and (max-width: 600px) {
+	nav .nav-links {
+		display: none;
+	}
+
+	nav .nav-links.active {
+		position: relative;
+	}
+
+	nav .nav-links.active .menu-button {
+		position: absolute;
+		right: 0;
+		top: 0;
+	}
+
+	.nav-links.active a,
+	.nav-links.active .log-out-button {
+		display: block;
+	}
 }
