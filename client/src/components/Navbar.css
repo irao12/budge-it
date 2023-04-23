@@ -9,6 +9,7 @@ nav {
 	align-items: center;
 	justify-content: space-between;
 	padding: 0 2rem;
+	z-index: 1;
 }
 
 nav .nav-links {

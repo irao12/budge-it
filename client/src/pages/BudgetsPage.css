@@ -1,5 +1,6 @@
 .budgets-page {
 	display: flex;
+	position: relative;
 	height: calc(100% - var(--navbar-height));
 	width: 100%;
 	padding: 3rem;
@@ -8,7 +9,7 @@
 .budgets-content {
 	margin: auto;
 	background-color: var(--light-green);
-	height: 100%;
+	min-height: 100%;
 	width: 100%;
 	border-radius: 1.5rem;
 	padding: 3rem;
@@ -17,6 +18,7 @@
 .budgets-heading {
 	font-weight: 600;
 	font-size: 2.4rem;
+	margin-bottom: 3rem;
 }
 
 .create-budget-button {
@@ -34,4 +36,80 @@
 	font-size: 2rem;
 	padding: 1rem;
 	font-family: "josefin-sans";
+	cursor: pointer;
+}
+
+.budgets-list {
+	display: grid;
+	row-gap: 5rem;
+	grid-template-columns: repeat(auto-fill, minmax(30rem, 1fr));
+}
+
+/*Create Budget Modal*/
+
+.create-budget-window {
+	background-color: white;
+	width: 60rem;
+	max-width: 90%;
+	margin: auto;
+	padding: 2.5rem;
+	border-radius: 1rem;
+}
+
+.create-budget-content {
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	gap: 2.4rem;
+}
+
+.close-create-budget-button {
+	height: 4rem;
+	width: 4rem;
+	border: none;
+	color: black;
+}
+
+.create-budget-heading {
+	align-self: center;
+	font-size: 2rem;
+}
+
+.create-budget-field {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+}
+
+.create-budget-field > label {
+	font-size: 2rem;
+}
+
+input,
+textarea {
+	font-family: "josefin-sans";
+	padding: 1rem;
+	font-size: 1.8rem;
+}
+
+.create-budget-field input {
+	height: 4rem;
+}
+
+#budget-desc {
+	resize: none;
+	height: 7rem;
+	font-family: "josefin-sans";
+	line-height: 1.6rem;
+}
+
+.post-budget-button {
+	background-color: var(--green);
+	color: white;
+	border: none;
+	padding: 2rem 10rem;
+	font-size: 2rem;
+	border-radius: 1rem;
+	font-family: "josefin-sans";
+	cursor: pointer;
 }

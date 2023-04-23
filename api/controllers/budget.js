@@ -4,38 +4,40 @@ const { budget: Budget } = require("../models");
 // url: /api/budget/:ownerId
 router.get("/:ownerId", (req, res) => {
 	const { ownerId } = req.params;
-	if (ownerId !== req.user.id) {
+
+	if (ownerId != req.user.id) {
 		res.status(401).json({ error: "User does not have access" });
-	}
-	Budget.findAll({
-		where: {
-			ownerId: ownerId,
-		},
-	})
-		.then((budgets) => {
-			res.status(200).json({ budgets: budgets });
+	} else {
+		Budget.findAll({
+			where: {
+				ownerId: ownerId,
+			},
 		})
-		.catch((err) => {
-			console.log(err);
-			res.status(400).json(err);
-		});
+			.then((budgets) => {
+				res.status(200).json({ budgets: budgets });
+			})
+			.catch((err) => {
+				console.log(err);
+				res.status(400).json(err);
+			});
+	}
 });
 
 // url: /api/budget/
 router.post("/", (req, res) => {
 	if (req.user.id) {
-		let { budgetName, budgetDesc } = req.body;
-		console.log(budgetName);
+		let { name, desc } = req.body;
 		Budget.create({
 			ownerId: req.user.id,
-			name: budgetName,
-			description: budgetDesc,
+			name: name,
+			description: desc,
 		})
 			.then((newBudget) => {
 				res.status(201).json(newBudget);
 			})
 			.catch((err) => {
 				res.status(400).json(err);
+				console.log(err);
 			});
 	}
 });
