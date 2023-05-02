@@ -6,6 +6,7 @@
 	display: flex;
 	border-radius: 1.6rem;
 	margin: auto;
+	cursor: pointer;
 }
 .budget-content {
 	margin: auto;

@@ -58,6 +58,7 @@ export default function BudgetsPage() {
 				body: JSON.stringify(body),
 			}).then((response) => {
 				if (response.ok) {
+					getBudgets();
 				} else {
 					alert("There was an error creating the budget");
 				}
@@ -124,7 +125,7 @@ export default function BudgetsPage() {
 				<h1 className="budgets-heading">Budgets</h1>
 				<div className="budgets-list">
 					{budgets.map((budget) => {
-						return <Budget budget={budget} />;
+						return <Budget id={budget.id} budget={budget} />;
 					})}
 				</div>
 			</div>

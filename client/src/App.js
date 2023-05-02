@@ -4,6 +4,7 @@ import Navbar from "./components/Navbar";
 import LoginPage from "./pages/LoginPage";
 import SignUpPage from "./pages/SignUpPage";
 import BudgetsPage from "./pages/BudgetsPage";
+import BudgetPage from "./pages/BudgetPage";
 import { AuthProvider } from "./context/AuthContext";
 import PrivateRoute from "./components/PrivateRoute";
 
@@ -16,10 +17,18 @@ function App() {
 					<Route path="/login" element={<LoginPage />}></Route>
 					<Route path="/signup" element={<SignUpPage />}></Route>
 					<Route
-						path="/budgets"
+						path="budgets"
 						element={
 							<PrivateRoute>
 								<BudgetsPage />
+							</PrivateRoute>
+						}
+					></Route>
+					<Route
+						path="/budgets/:id"
+						element={
+							<PrivateRoute>
+								<BudgetPage />
 							</PrivateRoute>
 						}
 					></Route>

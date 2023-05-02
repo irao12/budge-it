@@ -35,10 +35,9 @@ router.get("/:id", (req, res) => {
 		});
 });
 
-// url: /api/expenditure/:budgetId
-router.get(":budgetId/", (req, res) => {
+// url: /api/expenditure/budget/:budgetId
+router.get("/budget/:budgetId/", (req, res) => {
 	const { budgetId } = req.params;
-
 	Budget.findOne({
 		where: {
 			id: budgetId,
@@ -167,19 +166,12 @@ router.get(":budgetId/:year", (req, res) => {
 		});
 });
 
-// url: /api/expenditure/:budgetId/
-router.post(":budgetId/", (req, res) => {
+// url: /api/expenditure/
+router.post("/:budgetId", (req, res) => {
 	const { budgetId } = req.params;
-	const data = { amount: req.body.amount };
+	const data = req.body;
 
-	if (req.body.category) {
-		data.category = req.body.category;
-	}
-	if (req.body.date) {
-		data.date = req.body.date;
-	}
-
-	Budget.findOne({ where: { budgetId: budgetId } }).then((budget) => {
+	Budget.findOne({ where: { id: budgetId } }).then((budget) => {
 		if ((budget.ownerId = req.user.id)) {
 			Expenditure.create(data).then((newExpenditure) => {
 				res.status(200);
