@@ -19,8 +19,8 @@ export default function BudgetsPage() {
 		}).then((response) => {
 			if (!response.ok) {
 				response.json().then((error) => {
-					console.log(error.error);
-					alert(response.err);
+					console.log(error);
+					alert(error.err);
 				});
 
 				return;

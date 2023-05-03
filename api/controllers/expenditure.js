@@ -36,7 +36,7 @@ router.get("/:id", (req, res) => {
 });
 
 // url: /api/expenditure/budget/:budgetId
-router.get("/budget/:budgetId/", (req, res) => {
+router.get("/budget/:budgetId", (req, res) => {
 	const { budgetId } = req.params;
 	Budget.findOne({
 		where: {
@@ -44,7 +44,7 @@ router.get("/budget/:budgetId/", (req, res) => {
 		},
 	})
 		.then((budget) => {
-			if (budget.ownerId === req.user.id) {
+			if (Number(budget.ownerId) === req.user.id) {
 				Expenditure.findAll({
 					where: {
 						budgetId: budgetId,
@@ -55,6 +55,8 @@ router.get("/budget/:budgetId/", (req, res) => {
 				});
 			} else {
 				res.status(400).json({
+					budget: budget.ownerId,
+					userId: req.user.id,
 					err: "User does not have access to the expenditure",
 				});
 			}

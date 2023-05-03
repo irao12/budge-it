@@ -17,6 +17,48 @@
 	cursor: pointer;
 }
 
+.budget-page {
+	width: 100%;
+	height: calc(100% - var(--navbar-height));
+	display: flex;
+	padding: 3rem;
+}
+
+.budget-page-content {
+	margin: auto;
+	width: 100%;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	background-color: var(--light-green);
+	padding: 3rem;
+	border-radius: 1.3rem;
+}
+
+.budget-page-info {
+	margin-top: 2rem;
+	height: 100%;
+	display: flex;
+	flex-direction: row-reverse;
+	gap: 2rem;
+}
+
+.budget-page-side {
+	width: 30rem;
+}
+
+.budget-page-details {
+	width: 100%;
+	height: 100%;
+	background-color: white;
+	border-radius: 1rem;
+}
+
+.budget-groups {
+	display: flex;
+	gap: 1rem;
+}
+
 @media screen and (min-width: 1200px) {
 	.add-expenditure-button {
 		display: none;
