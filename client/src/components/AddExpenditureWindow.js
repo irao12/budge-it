@@ -49,7 +49,10 @@ export default function AddExpenditureWindow({
 			budgetId: id,
 			...expenditureInfo,
 		};
-		console.log(body);
+		if (expenditureInfo.category === "other") {
+			body.category = otherInput;
+		}
+
 		fetch(`/api/expenditure/${id}`, {
 			method: "POST",
 			headers: { "Content-Type": "application/json" },
@@ -64,7 +67,14 @@ export default function AddExpenditureWindow({
 			}
 		});
 		setShowModal(false);
-		getExpenditures();
+		setTimeout(getExpenditures, 250);
+		setExpenditureInfo({
+			amount: "",
+			category: "",
+			date: "",
+		});
+
+		console.log("added");
 	};
 
 	return (
@@ -76,7 +86,7 @@ export default function AddExpenditureWindow({
 						setShowModal(false);
 					}}
 				>
-					<img src={CloseMenu}></img>
+					<img src={CloseMenu} alt="close-button"></img>
 				</button>
 				<h2 className="add-expenditure-heading">Add Expenditure</h2>
 				<div className="add-expenditure-field">

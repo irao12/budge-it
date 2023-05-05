@@ -1,8 +1,8 @@
 const router = require("express").Router();
 const { budget: Budget } = require("../models");
 
-// url: /api/budget/:ownerId
-router.get("/:ownerId", (req, res) => {
+// url: /api/budget/owner/:ownerId
+router.get("/owner/:ownerId", (req, res) => {
 	const { ownerId } = req.params;
 
 	if (ownerId != req.user.id) {
@@ -21,6 +21,24 @@ router.get("/:ownerId", (req, res) => {
 				res.status(400).json(err);
 			});
 	}
+});
+
+// url: /api/budget/:id
+router.get("/:id", (req, res) => {
+	const { id } = req.params;
+	Budget.findOne({ where: { id: id } })
+		.then((budget) => {
+			if (Number(budget.ownerId) == req.user.id) {
+				res.json({ budget }).status(200);
+			} else {
+				res.status(400).json({
+					err: "User does not have access to the budget",
+				});
+			}
+		})
+		.catch((err) => {
+			res.json(err).status(400);
+		});
 });
 
 // url: /api/budget/

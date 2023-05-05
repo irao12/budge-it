@@ -1,0 +1,19 @@
+.expenditure-box {
+	padding: 1rem 2rem;
+	font-size: 1.6rem;
+	height: 4rem;
+	border-bottom: 2px solid var(--light-gray);
+	margin-bottom: 1rem;
+	text-align: right;
+	cursor: pointer;
+}
+
+.expenditure-box:hover {
+	background-color: var(--light-gray);
+}
+
+@media screen and (min-width: 800px) {
+	.expenditure-box {
+		padding: 1rem;
+	}
+}

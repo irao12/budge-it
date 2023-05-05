@@ -174,7 +174,7 @@ router.post("/:budgetId", (req, res) => {
 	const data = req.body;
 
 	Budget.findOne({ where: { id: budgetId } }).then((budget) => {
-		if ((budget.ownerId = req.user.id)) {
+		if (budget.ownerId == req.user.id) {
 			Expenditure.create(data).then((newExpenditure) => {
 				res.status(200);
 			});
@@ -202,7 +202,7 @@ router.delete("/:id", (req, res) => {
 			}).then((budget) => {
 				// if the user is the owner, return the expenditure
 				// else return an error
-				if (budget.ownerId === req.user.id) {
+				if (budget.ownerId == req.user.id) {
 					expenditure.destroy();
 					res.sendStatus(204);
 				} else {

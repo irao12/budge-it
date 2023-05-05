@@ -4,11 +4,17 @@ import Modal from "../components/Modal";
 import { useParams } from "react-router-dom";
 import AddExpenditureWindow from "../components/AddExpenditureWindow";
 import { isThisWeek, getDay } from "date-fns";
+import ExpenditureBox from "../components/ExpenditureBox";
 
 export default function BudgetPage() {
 	const [showModal, setShowModal] = useState(false);
 	const [expenditures, setExpenditures] = useState([]);
+	const [budget, setBudget] = useState({});
 	const { id } = useParams();
+	const formatter = new Intl.NumberFormat("en-US", {
+		style: "currency",
+		currency: "USD",
+	});
 	const categories = [
 		"",
 		"entertainment",
@@ -19,27 +25,49 @@ export default function BudgetPage() {
 	];
 
 	useEffect(() => {
+		getBudget();
 		getExpenditures();
 	}, []);
 
+	const getBudget = () => {
+		fetch(`/api/budget/${id}`).then((response) => {
+			if (!response.ok) {
+				response.json().then((error) => {
+					alert(error.err);
+				});
+				return;
+			}
+			response.json().then((response) => {
+				setBudget(response.budget);
+			});
+		});
+	};
+
 	const separateExpendituresByDay = (expenditures) => {
 		const daysOfWeek = {
-			0: "Sunday",
-			1: "Monday",
-			2: "Tuesday",
-			3: "Wednesday",
-			4: "Thursday",
-			5: "Friday",
-			6: "Saturday",
+			0: "Monday",
+			1: "Tuesday",
+			2: "Wednesday",
+			3: "Thursday",
+			4: "Friday",
+			5: "Saturday",
+			6: "Sunday",
 		};
 		const weekSummary = [];
 		for (let i = 0; i < 7; i++) {
-			weekSummary.push({ day: daysOfWeek[i], expenditures: [] });
+			weekSummary.push({ name: daysOfWeek[i], expenditures: [] });
 		}
 		expenditures.forEach((expenditure) => {
-			const currDay = getDay(new Date(expenditure.date));
-			weekSummary[currDay].expenditures.push(expenditure);
+			const currDay = getDay(
+				new Date(expenditure.date.replace(/-/g, "/"))
+			);
+			if (currDay === 0) {
+				weekSummary[6].expenditures.push(expenditure);
+			} else {
+				weekSummary[currDay - 1].expenditures.push(expenditure);
+			}
 		});
+
 		return weekSummary;
 	};
 
@@ -58,7 +86,7 @@ export default function BudgetPage() {
 			response.json().then((res) => {
 				res = res.filter((expenditure) => {
 					const currDate = new Date(expenditure.date);
-					return isThisWeek(currDate);
+					return isThisWeek(currDate, { weekStartsOn: 0 });
 				});
 				setExpenditures(separateExpendituresByDay(res));
 			});
@@ -78,21 +106,36 @@ export default function BudgetPage() {
 				</Modal>
 			)}
 			<div className="budget-page-content">
-				<h1>Ivan's Budget</h1>
+				<h1 className="budget-page-name">{budget.name}</h1>
 				<div className="budget-page-info">
 					<div className="budget-page-side">
-						<button>Show Summary</button>
+						<button className="budget-summary-button">
+							Show Summary
+						</button>
+						<AddExpenditureWindow
+							setShowModal={setShowModal}
+							id={id}
+							categories={categories}
+							getExpenditures={getExpenditures}
+						/>
 					</div>
 					<div className="budget-page-details">
 						<div className="budget-groups">
 							{expenditures.map((group) => {
 								return (
-									<div>
-										<h3>{group.day}</h3>
+									<div className="budget-group">
+										<h3 className="expenditure-group-heading">
+											{group.name}
+										</h3>
 										{group.expenditures.map(
 											(expenditure) => {
 												return (
-													<p>{expenditure.amount}</p>
+													<ExpenditureBox
+														expenditure={
+															expenditure
+														}
+														formatter={formatter}
+													/>
 												);
 											}
 										)}

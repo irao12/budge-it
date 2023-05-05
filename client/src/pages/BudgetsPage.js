@@ -14,7 +14,7 @@ export default function BudgetsPage() {
 	}, []);
 
 	const getBudgets = () => {
-		fetch(`api/budget/${auth.user.id}`, {
+		fetch(`api/budget/owner/${auth.user.id}`, {
 			method: "GET",
 		}).then((response) => {
 			if (!response.ok) {
