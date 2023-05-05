@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
 				defaultValue: "Miscellaneous",
 			},
 			amount: {
-				type: DataTypes.INTEGER,
+				type: DataTypes.DECIMAL,
 				allowNull: false,
 				defaultValue: 0,
 			},

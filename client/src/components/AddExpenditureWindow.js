@@ -1,7 +1,12 @@
 import React, { useState } from "react";
 import CloseMenu from "../images/close-black.svg";
 
-export default function AddExpenditureWindow({ id, setShowModal, categories }) {
+export default function AddExpenditureWindow({
+	id,
+	setShowModal,
+	categories,
+	getExpenditures,
+}) {
 	const [otherInput, setOtherInput] = useState("");
 	const [expenditureInfo, setExpenditureInfo] = useState({
 		amount: "",
@@ -59,6 +64,7 @@ export default function AddExpenditureWindow({ id, setShowModal, categories }) {
 			}
 		});
 		setShowModal(false);
+		getExpenditures();
 	};
 
 	return (

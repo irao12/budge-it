@@ -73,6 +73,7 @@ export default function BudgetPage() {
 						setShowModal={setShowModal}
 						id={id}
 						categories={categories}
+						getExpenditures={getExpenditures}
 					/>
 				</Modal>
 			)}
