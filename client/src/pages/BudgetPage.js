@@ -3,11 +3,14 @@ import "./BudgetPage.css";
 import Modal from "../components/Modal";
 import { useParams } from "react-router-dom";
 import AddExpenditureWindow from "../components/AddExpenditureWindow";
+import ExpenditureInfoWindow from "../components/ExpenditureInfoWindow";
 import { isThisWeek, getDay } from "date-fns";
 import ExpenditureBox from "../components/ExpenditureBox";
 
 export default function BudgetPage() {
 	const [showModal, setShowModal] = useState(false);
+	const [showExpenditure, setShowExpenditure] = useState(false);
+	const [currExpenditure, setCurrExpenditure] = useState({});
 	const [expenditures, setExpenditures] = useState([]);
 	const [budget, setBudget] = useState({});
 	const { id } = useParams();
@@ -105,6 +108,15 @@ export default function BudgetPage() {
 					/>
 				</Modal>
 			)}
+			{showExpenditure && (
+				<Modal>
+					<ExpenditureInfoWindow
+						expenditure={currExpenditure}
+						setShowExpenditure={setShowExpenditure}
+						categories={categories}
+					/>
+				</Modal>
+			)}
 			<div className="budget-page-content">
 				<h1 className="budget-page-name">{budget.name}</h1>
 				<div className="budget-page-info">
@@ -133,6 +145,12 @@ export default function BudgetPage() {
 													<ExpenditureBox
 														expenditure={
 															expenditure
+														}
+														setCurrExpenditure={
+															setCurrExpenditure
+														}
+														setShowExpenditure={
+															setShowExpenditure
 														}
 														formatter={formatter}
 													/>

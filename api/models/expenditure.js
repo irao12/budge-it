@@ -13,6 +13,10 @@ module.exports = (sequelize, DataTypes) => {
 				type: DataTypes.STRING,
 				defaultValue: "Miscellaneous",
 			},
+			description: {
+				type: DataTypes.STRING,
+				defaultValue: "",
+			},
 			amount: {
 				type: DataTypes.DECIMAL,
 				allowNull: false,

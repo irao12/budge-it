@@ -1,21 +1,15 @@
 import React, { useState } from "react";
 import CloseMenu from "../images/close-black.svg";
-import "./AddExpenditureWindow.css";
 
-export default function AddExpenditureWindow({
-	id,
-	setShowModal,
+export default function ExpenditureInfoWindow({
+	expenditure,
+	setShowExpenditure,
 	categories,
-	getExpenditures,
 }) {
-	const [otherInput, setOtherInput] = useState("");
 	const [expenditureInfo, setExpenditureInfo] = useState({
-		amount: "",
-		category: "",
-		date: "",
-		description: "",
+		...expenditure,
 	});
-
+	const [otherInput, setOtherInput] = useState("");
 	const updateValue = (e) => {
 		if (e.target.name === "amount") {
 			if (isNaN(e.target.value)) return;
@@ -37,61 +31,13 @@ export default function AddExpenditureWindow({
 			[e.target.name]: e.target.value,
 		});
 	};
-
-	const validateInput = () => {
-		if (
-			expenditureInfo.amount.trim() === "" ||
-			expenditureInfo.category.trim() === "" ||
-			expenditureInfo.date.trim() === ""
-		) {
-			return false;
-		}
-		return true;
-	};
-
-	const addExpenditure = () => {
-		if (!validateInput()) return;
-
-		const body = {
-			budgetId: id,
-			...expenditureInfo,
-		};
-		if (expenditureInfo.category === "other") {
-			body.category = otherInput;
-		}
-
-		fetch(`/api/expenditure/${id}`, {
-			method: "POST",
-			headers: { "Content-Type": "application/json" },
-			body: JSON.stringify(body),
-		}).then((response) => {
-			if (response.ok) {
-			} else {
-				response.json().then((result) => {
-					console.log(result.err);
-				});
-				alert("There was an error creating the expenditure");
-			}
-		});
-		setShowModal(false);
-		setTimeout(getExpenditures, 250);
-		setExpenditureInfo({
-			amount: "",
-			category: "",
-			date: "",
-			description: "",
-		});
-
-		console.log("added");
-	};
-
 	return (
 		<div className="add-expenditure-window">
 			<div className="add-expenditure-content">
 				<button
 					className="close-add-expenditure-button"
 					onClick={() => {
-						setShowModal(false);
+						setShowExpenditure(false);
 					}}
 				>
 					<img src={CloseMenu} alt="close-button"></img>
@@ -166,12 +112,6 @@ export default function AddExpenditureWindow({
 						}}
 					></input>
 				</div>
-				<button
-					className="post-expenditure-button"
-					onClick={addExpenditure}
-				>
-					Add Expenditure
-				</button>
 			</div>
 		</div>
 	);

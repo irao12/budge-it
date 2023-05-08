@@ -1,0 +1,62 @@
+/*Add Expenditure Window*/
+
+.add-expenditure-window {
+	background-color: white;
+	width: 60rem;
+	max-width: 90%;
+	margin: auto;
+	padding: 2.5rem;
+	border-radius: 1rem;
+}
+
+.add-expenditure-content {
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	gap: 2.4rem;
+}
+
+.close-add-expenditure-button {
+	height: 4rem;
+	width: 4rem;
+	border: none;
+	color: black;
+	cursor: pointer;
+}
+
+.add-expenditure-heading {
+	align-self: center;
+	font-size: 2rem;
+}
+
+.add-expenditure-field {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+}
+
+.add-expenditure-field > label {
+	font-size: 2rem;
+}
+
+.add-expenditure-field > input {
+	text-align: right;
+}
+
+.add-expenditure-field > select {
+	height: 4rem;
+	font-family: "josefin-sans";
+	font-size: 1.8rem;
+	text-align: end;
+}
+
+.post-expenditure-button {
+	background-color: var(--green);
+	color: white;
+	border: none;
+	padding: 2rem 10rem;
+	font-size: 2rem;
+	border-radius: 1rem;
+	font-family: "josefin-sans";
+	cursor: pointer;
+}
