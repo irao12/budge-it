@@ -7,7 +7,7 @@ export default function HomePage() {
 		<div className="home-page">
 			<div className="home-content">
 				<h1 className="home-title">Budge-It</h1>
-				<img className="safe-image" src={Safe} />
+				<img className="safe-image" src={Safe} alt="safe" />
 				<p className="home-description">
 					Start budging your spending habits and saving with Budge-It!
 				</p>
