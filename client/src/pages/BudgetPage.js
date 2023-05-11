@@ -4,13 +4,23 @@ import Modal from "../components/Modal";
 import { useParams } from "react-router-dom";
 import AddExpenditureWindow from "../components/AddExpenditureWindow";
 import ExpenditureInfoWindow from "../components/ExpenditureInfoWindow";
-import { isThisWeek, getDay } from "date-fns";
+import {
+	isThisWeek,
+	isThisMonth,
+	getWeekOfMonth,
+	getWeeksInMonth,
+	isThisYear,
+	getMonth,
+	getDay,
+} from "date-fns";
 import ExpenditureBox from "../components/ExpenditureBox";
 
 export default function BudgetPage() {
 	const [showModal, setShowModal] = useState(false);
 	const [showExpenditure, setShowExpenditure] = useState(false);
 	const [currExpenditure, setCurrExpenditure] = useState({});
+	const [filter, setFilter] = useState("week");
+	const [allExpenditures, setAllExpenditures] = useState([]);
 	const [expenditures, setExpenditures] = useState([]);
 	const [budget, setBudget] = useState({});
 	const { id } = useParams();
@@ -61,9 +71,9 @@ export default function BudgetPage() {
 			weekSummary.push({ name: daysOfWeek[i], expenditures: [] });
 		}
 		expenditures.forEach((expenditure) => {
-			const currDay = getDay(
-				new Date(expenditure.date.replace(/-/g, "/"))
-			);
+			const currDate = new Date(expenditure.date.replace(/-/g, "/"));
+			if (!isThisWeek(currDate)) return;
+			const currDay = getDay(currDate);
 			if (currDay === 0) {
 				weekSummary[6].expenditures.push(expenditure);
 			} else {
@@ -72,6 +82,67 @@ export default function BudgetPage() {
 		});
 
 		return weekSummary;
+	};
+
+	const separateExpendituresByWeek = (expenditures) => {
+		const num_weeks = getWeeksInMonth(new Date());
+		const monthSummary = [];
+		for (let i = 0; i < num_weeks; i++) {
+			monthSummary.push({ name: `Week ${i + 1}`, expenditures: [] });
+		}
+		expenditures.forEach((expenditure) => {
+			const currDate = new Date(expenditure.date.replace(/-/g, "/"));
+			if (!isThisMonth(currDate)) return;
+			const currWeek = getWeekOfMonth(currDate);
+			if (currWeek === 0) {
+				monthSummary[num_weeks - 1].expenditures.push(expenditure);
+			}
+			monthSummary[currWeek - 1].expenditures.push(expenditure);
+		});
+		return monthSummary;
+	};
+
+	const separateExpendituresByMonth = (expenditures) => {
+		const monthOfYear = {
+			0: "January",
+			1: "February",
+			2: "March",
+			3: "April",
+			4: "May",
+			5: "June",
+			6: "July",
+			7: "August",
+			8: "September",
+			9: "October",
+			10: "November",
+			11: "December",
+		};
+		const yearSummary = [];
+		for (let i = 0; i < 12; i++) {
+			yearSummary.push({ name: monthOfYear[i], expenditures: [] });
+		}
+
+		expenditures.forEach((expenditure) => {
+			const currDate = new Date(expenditure.date.replace(/-/g, "/"));
+			if (!isThisYear(currDate)) return;
+			const currMonth = getMonth(currDate);
+			if (currMonth === 0) {
+				yearSummary[0].expenditures.push(expenditure);
+			}
+			yearSummary[currMonth].expenditures.push(expenditure);
+		});
+		console.log(yearSummary);
+		return yearSummary;
+	};
+
+	const filterExpenditures = (filter) => {
+		if (filter === "week") {
+			setExpenditures(separateExpendituresByDay(allExpenditures));
+		} else if (filter === "month") {
+			setExpenditures(separateExpendituresByWeek(allExpenditures));
+		} else if (filter === "year") {
+			setExpenditures(separateExpendituresByMonth(allExpenditures));
+		}
 	};
 
 	const getExpenditures = () => {
@@ -87,15 +158,16 @@ export default function BudgetPage() {
 				return;
 			}
 			response.json().then((res) => {
-				res = res.filter((expenditure) => {
-					const currDate = new Date(expenditure.date);
-					return isThisWeek(currDate, { weekStartsOn: 0 });
-				});
-				setExpenditures(separateExpendituresByDay(res));
+				setAllExpenditures(res);
+				if (filter === "week") {
+					setExpenditures(separateExpendituresByDay(res));
+				} else if (filter === "month") {
+					setExpenditures(separateExpendituresByWeek(res));
+				}
 			});
 		});
 	};
-	console.log(expenditures);
+
 	return (
 		<div className="budget-page">
 			{showModal && (
@@ -118,7 +190,24 @@ export default function BudgetPage() {
 				</Modal>
 			)}
 			<div className="budget-page-content">
-				<h1 className="budget-page-name">{budget.name}</h1>
+				<div className="budget-page-top">
+					<h1 className="budget-page-name">{budget.name}</h1>
+					<select
+						name="category"
+						value={filter}
+						onChange={(e) => {
+							if (filter !== e.target.value) {
+								filterExpenditures(e.target.value);
+							}
+							setFilter(e.target.value);
+						}}
+					>
+						<option value="week">This Week</option>
+						<option value="month">This Month</option>
+						<option value="year">This Year</option>
+					</select>
+				</div>
+
 				<div className="budget-page-info">
 					<div className="budget-page-side">
 						<button className="budget-summary-button">

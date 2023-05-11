@@ -7,6 +7,7 @@ import BudgetsPage from "./pages/BudgetsPage";
 import BudgetPage from "./pages/BudgetPage";
 import { AuthProvider } from "./context/AuthContext";
 import PrivateRoute from "./components/PrivateRoute";
+import HomePage from "./pages/HomePage";
 
 function App() {
 	return (
@@ -14,6 +15,7 @@ function App() {
 			<AuthProvider>
 				<Navbar />
 				<Routes>
+					<Route index path="/home" element={<HomePage />}></Route>
 					<Route path="/login" element={<LoginPage />}></Route>
 					<Route path="/signup" element={<SignUpPage />}></Route>
 					<Route
