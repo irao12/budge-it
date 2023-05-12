@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import CloseMenu from "../images/close-black.svg";
+import "./ExpenditureInfoWindow.css";
 
 export default function ExpenditureInfoWindow({
 	expenditure,
 	setShowExpenditure,
 	categories,
+	getExpenditures,
 }) {
 	const [expenditureInfo, setExpenditureInfo] = useState({
 		...expenditure,
@@ -31,6 +33,25 @@ export default function ExpenditureInfoWindow({
 			[e.target.name]: e.target.value,
 		});
 	};
+
+	const deleteExpenditure = () => {
+		fetch(`/api/expenditure/${expenditure.id}`, {
+			method: "DELETE",
+		}).then((response) => {
+			if (response.ok) {
+				setShowExpenditure(false);
+				setTimeout(() => {
+					getExpenditures();
+				}, 50);
+			} else {
+				response.json().then((result) => {
+					console.log(result.err);
+				});
+				alert("There was an error deleting the expenditure");
+			}
+		});
+	};
+
 	return (
 		<div className="add-expenditure-window">
 			<div className="add-expenditure-content">
@@ -43,7 +64,10 @@ export default function ExpenditureInfoWindow({
 					>
 						<img src={CloseMenu} alt="close-button"></img>
 					</button>
-					<button className="close-add-expenditure-button">
+					<button
+						className="delete-expenditure-button"
+						onClick={deleteExpenditure}
+					>
 						Delete
 					</button>
 				</div>

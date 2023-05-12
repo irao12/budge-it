@@ -28,3 +28,7 @@
 .summary-text p {
 	margin-bottom: 3rem;
 }
+
+.summary-window button:hover {
+	background-color: darkgray;
+}

@@ -88,7 +88,19 @@
 }
 
 .budget-group {
-	padding: 1rem 0.5rem;
+	padding: 1rem 1rem;
+	position: relative;
+	min-width: 10rem;
+}
+
+.budget-group .total {
+	font-size: 1.8rem;
+	font-weight: 400;
+	margin-bottom: 2rem;
+	text-align: center;
+	border-top: 1px solid rgb(152, 152, 152);
+	padding-top: 1rem;
+	width: 100%;
 }
 
 .expenditure-group-heading {
@@ -127,6 +139,11 @@
 	.budget-groups {
 		flex-direction: row;
 		padding: 1rem;
+	}
+	.budget-group .total {
+		position: absolute;
+		bottom: 0;
+		margin-bottom: 0;
 	}
 }
 

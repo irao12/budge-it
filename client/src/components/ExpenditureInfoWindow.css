@@ -1,5 +1,19 @@
 .add-expenditure-window .buttons {
 	display: flex;
-	justify-content: center;
+	flex-direction: row;
+	justify-content: space-between;
 	width: 100%;
+}
+
+.delete-expenditure-button {
+	border: none;
+	border-radius: 0.5rem;
+	padding: 1.5rem 1.5rem;
+	font-family: "josefin-sans";
+	font-size: 1.6rem;
+	cursor: pointer;
+}
+
+.add-expenditure-window .buttons button:hover {
+	background-color: darkgray;
 }

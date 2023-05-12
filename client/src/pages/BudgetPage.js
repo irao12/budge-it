@@ -10,7 +10,7 @@ import {
 	separateExpendituresByMonth,
 } from "../util/filterFunctions.js";
 import ExpenditureBox from "../components/ExpenditureBox";
-import SummaryWindow from "./SummaryWindow";
+import SummaryWindow from "../components/SummaryWindow";
 
 export default function BudgetPage() {
 	const [showModal, setShowModal] = useState(false);
@@ -88,6 +88,14 @@ export default function BudgetPage() {
 		});
 	};
 
+	const getTotal = (expenditures) => {
+		let total = 0;
+		expenditures.forEach((expenditure) => {
+			total += Number(expenditure.amount);
+		});
+		return total;
+	};
+
 	return (
 		<div className="budget-page">
 			{showModal && (
@@ -106,6 +114,7 @@ export default function BudgetPage() {
 						expenditure={currExpenditure}
 						setShowExpenditure={setShowExpenditure}
 						categories={categories}
+						getExpenditures={getExpenditures}
 					/>
 				</Modal>
 			)}
@@ -158,6 +167,8 @@ export default function BudgetPage() {
 						<div className="budget-groups">
 							{expenditures.map((group, index) => {
 								const group_index = index;
+								const total = getTotal(group.expenditures);
+
 								return (
 									<div
 										key={`group-${index}`}
@@ -185,6 +196,10 @@ export default function BudgetPage() {
 												);
 											}
 										)}
+										<h2 className="total">
+											Total: <br />
+											{formatter.format(total)}
+										</h2>
 									</div>
 								);
 							})}

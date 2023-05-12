@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import CloseMenu from "../images/close-black.svg";
 import "./SummaryWindow.css";
 export default function SummaryWindow({
@@ -6,8 +6,6 @@ export default function SummaryWindow({
 	expenditures,
 	filter,
 }) {
-	const svgRef = useRef();
-	const getAllExpenditures = () => {};
 	const [summary, setSummary] = useState("");
 
 	const formatter = new Intl.NumberFormat("en-US", {
@@ -42,9 +40,7 @@ export default function SummaryWindow({
 		totalSpent = totalSpent / 100;
 
 		const categories = Object.keys(categorySummary);
-		let summaryString = `This ${filter}, you spent a total of ${formatter.format(
-			totalSpent
-		)}\n`;
+
 		const summaryText = (
 			<div className="summary-text">
 				<p>
@@ -54,12 +50,12 @@ export default function SummaryWindow({
 					</span>
 				</p>
 
-				{categories.map((category) => {
+				{categories.map((category, index) => {
 					const amount = formatter.format(
 						categorySummary[category] / 100
 					);
 					return (
-						<p>
+						<p key={`summary-${index}`}>
 							You spent{" "}
 							<span className="highlighted">{amount}</span> on
 							expenditures with the{" "}
@@ -93,7 +89,7 @@ export default function SummaryWindow({
 					<img src={CloseMenu} alt="close-button"></img>
 				</button>
 				<h1>{`Summary for this ${filter}`}</h1>
-				<p className="summary-text">{summary}</p>
+				{summary}
 			</div>
 		</div>
 	);
