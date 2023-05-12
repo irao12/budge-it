@@ -9,9 +9,14 @@ export default function ExpenditureInfoWindow({
 	getExpenditures,
 }) {
 	const [expenditureInfo, setExpenditureInfo] = useState({
-		...expenditure,
+		amount: expenditure.amount,
+		description: expenditure.description,
+		date: expenditure.date,
+		category: expenditure.category,
 	});
 	const [otherInput, setOtherInput] = useState("");
+	const [madeChanges, setMadeChanges] = useState(false);
+
 	const updateValue = (e) => {
 		if (e.target.name === "amount") {
 			if (isNaN(e.target.value)) return;
@@ -32,6 +37,7 @@ export default function ExpenditureInfoWindow({
 			...expenditureInfo,
 			[e.target.name]: e.target.value,
 		});
+		setMadeChanges(true);
 	};
 
 	const deleteExpenditure = () => {
@@ -48,6 +54,47 @@ export default function ExpenditureInfoWindow({
 					console.log(result.err);
 				});
 				alert("There was an error deleting the expenditure");
+			}
+		});
+	};
+
+	const validateInput = () => {
+		if (
+			expenditureInfo.amount.trim() === "" ||
+			expenditureInfo.category.trim() === "" ||
+			expenditureInfo.date.trim() === ""
+		) {
+			return false;
+		}
+		return true;
+	};
+
+	const updateExpenditure = () => {
+		if (!validateInput()) return;
+
+		const body = {
+			budgetId: expenditure.budgetId,
+			...expenditureInfo,
+		};
+		if (expenditureInfo.category === "other") {
+			body.category = otherInput;
+		}
+
+		fetch(`/api/expenditure/${expenditure.id}`, {
+			method: "PUT",
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify(body),
+		}).then((response) => {
+			if (response.ok) {
+				setShowExpenditure(false);
+				setTimeout(() => {
+					getExpenditures();
+				}, 50);
+			} else {
+				response.json().then((result) => {
+					console.log(result.err);
+				});
+				alert("There was an error creating the expenditure");
 			}
 		});
 	};
@@ -124,6 +171,7 @@ export default function ExpenditureInfoWindow({
 							value={otherInput}
 							onChange={(e) => {
 								setOtherInput(e.target.value);
+								setMadeChanges(true);
 							}}
 						></input>
 					)}
@@ -142,6 +190,14 @@ export default function ExpenditureInfoWindow({
 						}}
 					></input>
 				</div>
+				{madeChanges && (
+					<button
+						className="post-expenditure-button"
+						onClick={updateExpenditure}
+					>
+						Update Expenditure
+					</button>
+				)}
 			</div>
 		</div>
 	);

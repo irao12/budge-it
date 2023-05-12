@@ -116,6 +116,42 @@ router.post("/:budgetId", (req, res) => {
 	});
 });
 
+// url: /api/expenditure/
+router.put("/:id", (req, res) => {
+	const { id } = req.params;
+	const data = req.body;
+
+	Expenditure.findOne({
+		where: { id: id },
+	})
+		.then((expenditure) => {
+			const budgetId = expenditure.budgetId;
+			//find the budget that the expenditure belongs to
+			Budget.findOne({
+				where: { id: budgetId },
+			}).then((budget) => {
+				// if the user is the owner, return the expenditure
+				// else return an error
+				if (budget.ownerId == req.user.id) {
+					expenditure.amount = data.amount;
+					expenditure.category = data.category;
+					expenditure.date = data.date;
+					expenditure.description = data.description;
+					expenditure.save();
+					res.sendStatus(200);
+				} else {
+					res.status(400).json({
+						err: "User does not have access to the expenditure",
+					});
+				}
+			});
+		})
+		.catch((err) => {
+			console.log(err);
+			res.status(400).json(err);
+		});
+});
+
 // url: /api/expenditure/:id
 router.delete("/:id", (req, res) => {
 	const { id } = req.params;

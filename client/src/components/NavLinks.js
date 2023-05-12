@@ -7,7 +7,7 @@ export default function NavLinks({ showMenu }) {
 	const navigate = useNavigate();
 	return (
 		<div className={showMenu ? "nav-links active" : "nav-links"}>
-			<Link to="home">Home</Link>
+			<Link to="/">Home</Link>
 			{auth.isAuthenticated ? (
 				<Link to="budgets">Budgets</Link>
 			) : (

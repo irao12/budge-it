@@ -15,7 +15,7 @@ function App() {
 			<AuthProvider>
 				<Navbar />
 				<Routes>
-					<Route index path="/home" element={<HomePage />}></Route>
+					<Route index path="/" element={<HomePage />}></Route>
 					<Route path="/login" element={<LoginPage />}></Route>
 					<Route path="/signup" element={<SignUpPage />}></Route>
 					<Route
