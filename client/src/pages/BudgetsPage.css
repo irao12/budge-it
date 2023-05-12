@@ -12,7 +12,7 @@
 	min-height: 100%;
 	width: 100%;
 	border-radius: 1.5rem;
-	padding: 3rem;
+	padding: 1.5rem;
 }
 
 .budgets-heading {
@@ -43,6 +43,12 @@
 	display: grid;
 	row-gap: 5rem;
 	grid-template-columns: repeat(auto-fill, minmax(30rem, 1fr));
+}
+
+@media screen and (min-width: 800px) {
+	.budgets-content {
+		padding: 3rem;
+	}
 }
 
 /*Create Budget Modal*/
