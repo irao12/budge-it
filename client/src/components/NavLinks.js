@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 export default function NavLinks({ showMenu }) {
 	const auth = useContext(AuthContext);
-	const navigate = useNavigate;
+	const navigate = useNavigate();
 	return (
 		<div className={showMenu ? "nav-links active" : "nav-links"}>
 			<Link to="home">Home</Link>
@@ -18,7 +18,7 @@ export default function NavLinks({ showMenu }) {
 					className="log-out-button"
 					onClick={() => {
 						auth.signout();
-						navigate("/");
+						navigate("/login");
 					}}
 				>
 					Log Out

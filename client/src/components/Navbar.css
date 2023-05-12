@@ -80,7 +80,7 @@ nav .nav-links a:visited {
 		justify-content: center;
 		align-items: center;
 		gap: 4rem;
-		background-color: var(--light-green);
+		background-color: white;
 	}
 }
 

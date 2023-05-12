@@ -8,7 +8,7 @@ import CloseMenu from "../images/close.svg";
 
 export default function Navbar() {
 	const [showMenu, setShowMenu] = useState(false);
-
+	const navigate = useNavigate();
 	return (
 		<>
 			<nav className={showMenu ? "active" : ""}>
