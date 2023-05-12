@@ -170,37 +170,48 @@ export default function BudgetPage() {
 								const total = getTotal(group.expenditures);
 
 								return (
-									<div
-										key={`group-${index}`}
-										className="budget-group"
-									>
-										<h3 className="expenditure-group-heading">
-											{group.name}
-										</h3>
-										{group.expenditures.map(
-											(expenditure, index) => {
-												return (
-													<ExpenditureBox
-														key={`group-${group_index}-box-${index}`}
-														expenditure={
-															expenditure
+									<>
+										<div
+											key={`group-${index}`}
+											className="budget-group"
+										>
+											<h3 className="expenditure-group-heading">
+												{group.name}
+											</h3>
+											<div className="group-info">
+												<div className="group-expenditures">
+													{group.expenditures.map(
+														(
+															expenditure,
+															index
+														) => {
+															return (
+																<ExpenditureBox
+																	key={`group-${group_index}-box-${index}`}
+																	expenditure={
+																		expenditure
+																	}
+																	setCurrExpenditure={
+																		setCurrExpenditure
+																	}
+																	setShowExpenditure={
+																		setShowExpenditure
+																	}
+																	formatter={
+																		formatter
+																	}
+																/>
+															);
 														}
-														setCurrExpenditure={
-															setCurrExpenditure
-														}
-														setShowExpenditure={
-															setShowExpenditure
-														}
-														formatter={formatter}
-													/>
-												);
-											}
-										)}
-										<h2 className="total">
-											Total: <br />
-											{formatter.format(total)}
-										</h2>
-									</div>
+													)}
+												</div>
+												<h2 className="total">
+													Total: <br />
+													{formatter.format(total)}
+												</h2>
+											</div>
+										</div>
+									</>
 								);
 							})}
 						</div>

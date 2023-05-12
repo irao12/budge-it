@@ -81,7 +81,6 @@
 	gap: 1rem;
 	width: 100%;
 	height: 100%;
-	overflow: scroll;
 	background-color: white;
 	border-radius: 1rem;
 	padding: 1rem 4rem;
@@ -91,6 +90,12 @@
 	padding: 1rem 1rem;
 	position: relative;
 	min-width: 10rem;
+	padding-bottom: 4rem;
+}
+
+.group-expenditures {
+	overflow-y: scroll;
+	height: 100%;
 }
 
 .budget-group .total {
@@ -139,12 +144,18 @@
 		flex-direction: row;
 		padding: 1rem;
 	}
+	.group-info {
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		height: 100%;
+	}
+
 	.budget-group .total {
-		position: absolute;
-		bottom: 0;
 		margin-bottom: 0;
 		text-align: center;
 		border-top: 1px solid rgb(152, 152, 152);
+		align-self: flex-end;
 	}
 }
 

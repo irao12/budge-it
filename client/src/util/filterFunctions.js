@@ -10,13 +10,13 @@ import {
 
 const separateExpendituresByDay = (expenditures) => {
 	const daysOfWeek = {
-		0: "Monday",
-		1: "Tuesday",
-		2: "Wednesday",
-		3: "Thursday",
-		4: "Friday",
-		5: "Saturday",
-		6: "Sunday",
+		0: "Sunday",
+		1: "Monday",
+		2: "Tuesday",
+		3: "Wednesday",
+		4: "Thursday",
+		5: "Friday",
+		6: "Saturday",
 	};
 	const weekSummary = [];
 	for (let i = 0; i < 7; i++) {
@@ -26,11 +26,7 @@ const separateExpendituresByDay = (expenditures) => {
 		const currDate = new Date(expenditure.date.replace(/-/g, "/"));
 		if (!isThisWeek(currDate)) return;
 		const currDay = getDay(currDate);
-		if (currDay === 0) {
-			weekSummary[6].expenditures.push(expenditure);
-		} else {
-			weekSummary[currDay - 1].expenditures.push(expenditure);
-		}
+		weekSummary[currDay].expenditures.push(expenditure);
 	});
 
 	return weekSummary;
