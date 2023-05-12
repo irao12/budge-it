@@ -34,14 +34,20 @@ export default function ExpenditureInfoWindow({
 	return (
 		<div className="add-expenditure-window">
 			<div className="add-expenditure-content">
-				<button
-					className="close-add-expenditure-button"
-					onClick={() => {
-						setShowExpenditure(false);
-					}}
-				>
-					<img src={CloseMenu} alt="close-button"></img>
-				</button>
+				<div className="buttons">
+					<button
+						className="close-add-expenditure-button"
+						onClick={() => {
+							setShowExpenditure(false);
+						}}
+					>
+						<img src={CloseMenu} alt="close-button"></img>
+					</button>
+					<button className="close-add-expenditure-button">
+						Delete
+					</button>
+				</div>
+
 				<h2 className="add-expenditure-heading">Add Expenditure</h2>
 				<div className="add-expenditure-field">
 					<label htmlFor="amount" className="input-label">

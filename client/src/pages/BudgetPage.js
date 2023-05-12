@@ -10,10 +10,13 @@ import {
 	separateExpendituresByMonth,
 } from "../util/filterFunctions.js";
 import ExpenditureBox from "../components/ExpenditureBox";
+import SummaryWindow from "./SummaryWindow";
 
 export default function BudgetPage() {
 	const [showModal, setShowModal] = useState(false);
 	const [showExpenditure, setShowExpenditure] = useState(false);
+	const [showSummary, setShowSummary] = useState(false);
+
 	const [currExpenditure, setCurrExpenditure] = useState({});
 	const [filter, setFilter] = useState("week");
 	const [allExpenditures, setAllExpenditures] = useState([]);
@@ -106,6 +109,15 @@ export default function BudgetPage() {
 					/>
 				</Modal>
 			)}
+			{showSummary && (
+				<Modal>
+					<SummaryWindow
+						setShowSummary={setShowSummary}
+						filter={filter}
+						expenditures={expenditures}
+					/>
+				</Modal>
+			)}
 			<div className="budget-page-content">
 				<div className="budget-page-top">
 					<h1 className="budget-page-name">{budget.name}</h1>
@@ -127,7 +139,12 @@ export default function BudgetPage() {
 
 				<div className="budget-page-info">
 					<div className="budget-page-side">
-						<button className="budget-summary-button">
+						<button
+							className="budget-summary-button"
+							onClick={() => {
+								setShowSummary(true);
+							}}
+						>
 							Show Summary
 						</button>
 						<AddExpenditureWindow
@@ -139,16 +156,21 @@ export default function BudgetPage() {
 					</div>
 					<div className="budget-page-details">
 						<div className="budget-groups">
-							{expenditures.map((group) => {
+							{expenditures.map((group, index) => {
+								const group_index = index;
 								return (
-									<div className="budget-group">
+									<div
+										key={`group-${index}`}
+										className="budget-group"
+									>
 										<h3 className="expenditure-group-heading">
 											{group.name}
 										</h3>
 										{group.expenditures.map(
-											(expenditure) => {
+											(expenditure, index) => {
 												return (
 													<ExpenditureBox
+														key={`group-${group_index}-box-${index}`}
 														expenditure={
 															expenditure
 														}

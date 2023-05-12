@@ -22,7 +22,8 @@ body,
 
 :root {
 	--green: #21ab51;
-	--light-green: #e2efe6;
+	--dark-green: #208f47;
+	--light-green: #ecf3ee;
 	--navbar-height: 10rem;
 	--light-gray: #ebe9e9;
 }

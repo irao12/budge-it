@@ -20,6 +20,7 @@
 	height: 4rem;
 	width: 4rem;
 	border: none;
+	border-radius: 0.5rem;
 	color: black;
 	cursor: pointer;
 }

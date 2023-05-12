@@ -1,7 +1,6 @@
 .expenditure-box {
-	padding: 1rem 2rem;
+	padding: 2rem 2rem;
 	font-size: 1.6rem;
-	height: 4rem;
 	border-bottom: 2px solid var(--light-gray);
 	margin-bottom: 1rem;
 	text-align: right;
@@ -14,6 +13,6 @@
 
 @media screen and (min-width: 800px) {
 	.expenditure-box {
-		padding: 1rem;
+		padding: 1.5rem;
 	}
 }

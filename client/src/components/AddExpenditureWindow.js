@@ -134,8 +134,8 @@ export default function AddExpenditureWindow({
 						value={expenditureInfo.category}
 						onChange={updateValue}
 					>
-						{categories.map((category) => (
-							<option value={category}>
+						{categories.map((category, index) => (
+							<option key={`category-${index}`} value={category}>
 								{category !== ""
 									? category[0].toUpperCase() +
 									  category.slice(1)

@@ -75,7 +75,7 @@ export default function BudgetsPage() {
 							setShowModal(false);
 						}}
 					>
-						<img src={CloseMenu}></img>
+						<img src={CloseMenu} alt="close"></img>
 					</button>
 					<h2 className="create-budget-heading">Create Budget</h2>
 					<div className="create-budget-field">
@@ -124,8 +124,14 @@ export default function BudgetsPage() {
 			<div className="budgets-content">
 				<h1 className="budgets-heading">Budgets</h1>
 				<div className="budgets-list">
-					{budgets.map((budget) => {
-						return <Budget id={budget.id} budget={budget} />;
+					{budgets.map((budget, index) => {
+						return (
+							<Budget
+								key={index}
+								id={budget.id}
+								budget={budget}
+							/>
+						);
 					})}
 				</div>
 			</div>
