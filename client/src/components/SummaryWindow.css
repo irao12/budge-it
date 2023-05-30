@@ -29,6 +29,23 @@
 	margin-bottom: 3rem;
 }
 
-.summary-window button:hover {
+.reset-colors-button {
+	padding: 1.5rem;
+	width: 20rem;
+	align-self: flex-end;
+	background-color: var(--green);
+	border: none;
+	color: white;
+	font-family: inherit;
+	font-size: 1.6rem;
+	border-radius: 0.8rem;
+	cursor: pointer;
+}
+
+.reset-colors-button:hover {
+	background-color: var(--dark-green);
+}
+
+.summary-window .close-add-expenditure-button:hover {
 	background-color: darkgray;
 }

@@ -74,7 +74,7 @@ export default function AddExpenditureWindow({
 			}
 		});
 		setShowModal(false);
-		setTimeout(getExpenditures, 250);
+		setTimeout(getExpenditures, 500);
 		setExpenditureInfo({
 			amount: "",
 			category: "",

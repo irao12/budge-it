@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
 import CloseMenu from "../images/close-black.svg";
+import PieChart from "./PieChart";
 import "./SummaryWindow.css";
+import { Pie } from "react-chartjs-2";
 export default function SummaryWindow({
 	setShowSummary,
 	expenditures,
 	filter,
 }) {
 	const [summary, setSummary] = useState("");
+	const [data, setData] = useState({});
 
 	const formatter = new Intl.NumberFormat("en-US", {
 		style: "currency",
@@ -75,6 +78,7 @@ export default function SummaryWindow({
 		);
 
 		setSummary(summaryText);
+		setData(categorySummary);
 	}, []);
 
 	return (
@@ -90,6 +94,16 @@ export default function SummaryWindow({
 				</button>
 				<h1>{`Summary for this ${filter}`}</h1>
 				{summary}
+				<h1>Pie Chart</h1>
+				<button
+					className="reset-colors-button"
+					onClick={() => {
+						setData({ ...data });
+					}}
+				>
+					Reset Colors
+				</button>
+				<PieChart categoryData={data} />
 			</div>
 		</div>
 	);
