@@ -83,6 +83,8 @@ export default function BudgetPage() {
 					setExpenditures(separateExpendituresByDay(res));
 				} else if (filter === "month") {
 					setExpenditures(separateExpendituresByWeek(res));
+				} else if (filter === "year") {
+					setExpenditures(separateExpendituresByMonth(res));
 				}
 			});
 		});

@@ -48,7 +48,7 @@ export default function ExpenditureInfoWindow({
 				setShowExpenditure(false);
 				setTimeout(() => {
 					getExpenditures();
-				}, 50);
+				}, 500);
 			} else {
 				response.json().then((result) => {
 					console.log(result.err);
@@ -89,7 +89,7 @@ export default function ExpenditureInfoWindow({
 				setShowExpenditure(false);
 				setTimeout(() => {
 					getExpenditures();
-				}, 50);
+				}, 500);
 			} else {
 				response.json().then((result) => {
 					console.log(result.err);

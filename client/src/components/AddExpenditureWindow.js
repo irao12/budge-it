@@ -28,7 +28,7 @@ export default function AddExpenditureWindow({
 			}
 		}
 		if (e.target.name === "description") {
-			if (e.target.value > 50) {
+			if (e.target.value.length > 50) {
 				return;
 			}
 		}
