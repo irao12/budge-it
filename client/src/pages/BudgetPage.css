@@ -157,9 +157,12 @@
 		border-top: 1px solid rgb(152, 152, 152);
 		align-self: flex-end;
 	}
+	.budget-page-content {
+		max-width: 100rem;
+	}
 }
 
-@media screen and (min-width: 1100px) {
+@media screen and (min-width: 1100px) and (min-height: 800px) {
 	.add-expenditure-button {
 		display: none;
 	}
@@ -171,5 +174,8 @@
 	}
 	.budget-page-side > .add-expenditure-window {
 		display: block;
+	}
+	.budget-page-content {
+		max-width: 100%;
 	}
 }

@@ -83,27 +83,29 @@ export default function SummaryWindow({
 
 	return (
 		<div className="summary-window">
+			<button
+				className="close-add-expenditure-button"
+				onClick={() => {
+					setShowSummary(false);
+				}}
+			>
+				<img src={CloseMenu} alt="close-button"></img>
+			</button>
 			<div className="summary-content">
-				<button
-					className="close-add-expenditure-button"
-					onClick={() => {
-						setShowSummary(false);
-					}}
-				>
-					<img src={CloseMenu} alt="close-button"></img>
-				</button>
 				<h1>{`Summary for this ${filter}`}</h1>
 				{summary}
-				<h1>Pie Chart</h1>
-				<button
-					className="reset-colors-button"
-					onClick={() => {
-						setData({ ...data });
-					}}
-				>
-					Reset Colors
-				</button>
-				<PieChart categoryData={data} />
+				<div className="summary-pie-chart">
+					<h1>Pie Chart</h1>
+					<button
+						className="reset-colors-button"
+						onClick={() => {
+							setData({ ...data });
+						}}
+					>
+						Reset Colors
+					</button>
+					<PieChart categoryData={data} />
+				</div>
 			</div>
 		</div>
 	);
