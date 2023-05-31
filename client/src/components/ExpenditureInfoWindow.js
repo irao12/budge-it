@@ -119,7 +119,7 @@ export default function ExpenditureInfoWindow({
 					</button>
 				</div>
 
-				<h2 className="add-expenditure-heading">Add Expenditure</h2>
+				<h2 className="add-expenditure-heading">View Expenditure</h2>
 				<div className="add-expenditure-field">
 					<label htmlFor="amount" className="input-label">
 						Amount ($):
