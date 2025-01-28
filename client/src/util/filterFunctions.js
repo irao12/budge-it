@@ -74,12 +74,8 @@ const separateExpendituresByMonth = (expenditures) => {
 		const currDate = new Date(expenditure.date.replace(/-/g, "/"));
 		if (!isThisYear(currDate)) return;
 		const currMonth = getMonth(currDate);
-		if (currMonth === 0) {
-			yearSummary[0].expenditures.push(expenditure);
-		}
 		yearSummary[currMonth].expenditures.push(expenditure);
 	});
-	console.log(yearSummary);
 	return yearSummary;
 };
 
